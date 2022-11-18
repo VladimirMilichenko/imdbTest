@@ -10,11 +10,11 @@ import Foundation
 class MoviesViewModel {
     var movieCellViewModels = [MovieTableViewCellViewModel]() {
         didSet {
-            reloadTableView?()
+            viewModelCompletion?(nil)
         }
     }
     
-    var reloadTableView: (() -> ())?
+    var viewModelCompletion: ((Error?) -> ())?
     
     private var moviesService: MoviesServiceProtocol
     
@@ -26,15 +26,26 @@ class MoviesViewModel {
     
     //MARK: - Internal methods
     
-    func getMoviesFromApi() {
-        moviesService.getMoviesFromApi() { result in
-            switch result {
-            case .success(let movies):
-                self.fetchMovies(Array(movies[0...9]))
-            case .failure(let error):
-                print(error.localizedDescription)
+    func getMovies() {
+        if let bundleURL = Bundle.main.url(forResource: "Movies", withExtension: "json"),
+           let data = try? Data(contentsOf: bundleURL) {
+            guard let moviesModel = try? JSONDecoder().decode(Movies.self, from: data) else {
+                return
             }
+            
+            self.fetchMovies(moviesModel.items)
         }
+//        moviesService.getMoviesFromApi() { [weak self] result in
+//            switch result {
+//            case .success(let movies):
+//                let range = 0...9
+//                if movies.count >= range.count {
+//                    self?.fetchMovies(Array(movies[range]))
+//                }
+//            case .failure(let error):
+//                self?.viewModelCompletion?(error)
+//            }
+//        }
     }
     
     func getMovieeCellViewModel(at indexPath: IndexPath) -> MovieTableViewCellViewModel {
@@ -50,7 +61,7 @@ class MoviesViewModel {
             let cellViewModel = MovieTableViewCellViewModel(id: movie.id,
                                                             title: movie.title,
                                                             rank: movie.rank,
-                                                            imageUrlPath: movie.imageUrlPath)
+                                                            imageUrl: movie.imageUrl)
             
             vms.append(cellViewModel)
         }

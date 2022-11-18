@@ -11,13 +11,13 @@ struct Movie: Codable {
     let id: String
     let title: String
     let rank: String
-    let imageUrlPath: String
+    let imageUrl: URL
     
     enum CodingKeys: String, CodingKey {
         case id
         case title
         case rank
-        case imageUrlPath = "image"
+        case imageUrl = "image"
     }
 }
 

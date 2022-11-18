@@ -9,10 +9,10 @@ import UIKit
 
 class MovieTableViewCell: UITableViewCell {
     
-    //MARK: - IBOutlet
+    //MARK: IBOutlet
     
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var rankLabel: UILabel!
+    @IBOutlet weak var movieTitleTextView: UITextView!
+    @IBOutlet weak var movieRankLabel: UILabel!
     @IBOutlet weak var movieImageView: UIImageView!
     
     //MARK: - Class methods
@@ -23,32 +23,26 @@ class MovieTableViewCell: UITableViewCell {
     
     var cellViewModel: MovieTableViewCellViewModel? {
         didSet {
-            titleLabel.text = cellViewModel?.title
+            movieTitleTextView.text = cellViewModel?.title
             
-            let rankStr = NSLocalizedString("Rank", comment: "")
-            let undefinedStr = NSLocalizedString("Undefined", comment: "")
+            let rankStr = NSLocalizedString("movie_rank_caption", comment: "")
+            let undefinedStr = NSLocalizedString("undefined", comment: "")
             
-            rankLabel.text = rankStr + ": " + (cellViewModel?.rank ?? undefinedStr)
+            movieRankLabel.text = rankStr + ": " + (cellViewModel?.rank ?? undefinedStr)
+            
+            if let imgUrl = cellViewModel?.imageUrl {
+                movieImageView?.loadImage(from: imgUrl)
+            }
         }
     }
     
     //MARK: - UITableViewCell override
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
     override func prepareForReuse() {
         super.prepareForReuse()
-        
-//        titleLabel.text = nil
-//        rankLabel.text = nil
+
+        movieTitleTextView.text = nil
+        movieRankLabel.text = nil
+        movieImageView.image = nil
     }
 }

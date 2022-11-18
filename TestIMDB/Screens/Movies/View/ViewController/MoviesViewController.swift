@@ -19,10 +19,17 @@ class MoviesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel.getMoviesFromApi()
-        viewModel.reloadTableView = { [weak self] in
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
+        viewModel.getMovies()
+        
+        viewModel.viewModelCompletion = { [weak self] error in
+            if let err = error {
+                DispatchQueue.main.async {
+                    self?.showAlertWithError(err)
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                }
             }
         }
     }

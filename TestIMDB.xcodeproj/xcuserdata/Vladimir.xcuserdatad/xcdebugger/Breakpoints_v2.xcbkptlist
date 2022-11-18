@@ -87,16 +87,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "22776FFF-30D5-4401-8893-E95001BC1783"
+            uuid = "A45F7A85-4276-4AA4-8290-4E4821772C80"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TestIMDB/Services/MoviesService.swift"
+            filePath = "TestIMDB/Networking/HttpRequestHelper.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
-            landmarkName = "getMoviesFromApi(completion:)"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
+            landmarkName = "imdbApiGetRequest(path:params:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

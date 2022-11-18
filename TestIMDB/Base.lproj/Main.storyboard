@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieTableViewCell" rowHeight="160" id="lkT-zW-KFt" customClass="MovieTableViewCell" customModule="TestIMDB" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MovieTableViewCell" rowHeight="160" id="lkT-zW-KFt" customClass="MovieTableViewCell" customModule="TestIMDB" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="50" width="393" height="160"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lkT-zW-KFt" id="crH-dA-n3U">
@@ -32,16 +32,15 @@
                                                 <constraint firstAttribute="height" constant="138.33000000000001" id="meo-mL-SCZ"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kgc-aO-ET0">
-                                            <rect key="frame" x="172" y="21" width="201" height="24"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="24" id="seE-B2-sbc"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rank" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UJE-BV-9Km">
+                                        <textView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" textAlignment="justified" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HQo-Ts-94B">
+                                            <rect key="frame" x="172" y="11" width="201" height="96"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                            <color key="textColor" systemColor="labelColor"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rank" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UJE-BV-9Km">
                                             <rect key="frame" x="172" y="115" width="201" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="bB9-s0-goB"/>
@@ -53,19 +52,20 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="UJE-BV-9Km" firstAttribute="leading" secondItem="ds1-0F-Usg" secondAttribute="trailing" constant="8" symbolic="YES" id="FHO-S4-n5F"/>
-                                        <constraint firstItem="Kgc-aO-ET0" firstAttribute="leading" secondItem="ds1-0F-Usg" secondAttribute="trailing" constant="8" symbolic="YES" id="RWD-oG-j2m"/>
+                                        <constraint firstItem="UJE-BV-9Km" firstAttribute="top" secondItem="HQo-Ts-94B" secondAttribute="bottom" constant="8" symbolic="YES" id="SIW-Vo-Aoa"/>
                                         <constraint firstItem="ds1-0F-Usg" firstAttribute="leading" secondItem="crH-dA-n3U" secondAttribute="leading" constant="20" symbolic="YES" id="YF0-x5-Unr"/>
                                         <constraint firstItem="ds1-0F-Usg" firstAttribute="top" secondItem="crH-dA-n3U" secondAttribute="top" constant="11.33" id="YbV-Ui-ury"/>
+                                        <constraint firstItem="HQo-Ts-94B" firstAttribute="trailing" secondItem="crH-dA-n3U" secondAttribute="trailingMargin" id="ggi-V0-USn"/>
+                                        <constraint firstItem="HQo-Ts-94B" firstAttribute="leading" secondItem="ds1-0F-Usg" secondAttribute="trailing" constant="8" symbolic="YES" id="iz8-hg-OCN"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="UJE-BV-9Km" secondAttribute="bottom" constant="13" id="opx-Ml-Owb"/>
-                                        <constraint firstItem="Kgc-aO-ET0" firstAttribute="top" secondItem="crH-dA-n3U" secondAttribute="topMargin" constant="10" id="pAm-iX-u7Q"/>
+                                        <constraint firstItem="HQo-Ts-94B" firstAttribute="top" secondItem="crH-dA-n3U" secondAttribute="topMargin" id="q5M-A0-nRD"/>
                                         <constraint firstItem="UJE-BV-9Km" firstAttribute="trailing" secondItem="crH-dA-n3U" secondAttribute="trailingMargin" id="tGP-2i-Wnh"/>
-                                        <constraint firstItem="Kgc-aO-ET0" firstAttribute="trailing" secondItem="crH-dA-n3U" secondAttribute="trailingMargin" id="zFq-IQ-vuz"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="movieImageView" destination="ds1-0F-Usg" id="HTi-jw-pdM"/>
-                                    <outlet property="rankLabel" destination="UJE-BV-9Km" id="xbI-8j-LYR"/>
-                                    <outlet property="titleLabel" destination="Kgc-aO-ET0" id="Hyi-F0-SJQ"/>
+                                    <outlet property="movieRankLabel" destination="UJE-BV-9Km" id="XFg-R5-xsC"/>
+                                    <outlet property="movieTitleTextView" destination="HQo-Ts-94B" id="rHv-3b-XF4"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -99,6 +99,9 @@
     </scenes>
     <resources>
         <image name="photo.on.rectangle" catalog="system" width="128" height="98"/>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

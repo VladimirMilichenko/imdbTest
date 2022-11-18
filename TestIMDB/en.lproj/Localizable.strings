@@ -6,5 +6,7 @@
   
 */
 
-"Rank" = "Rank";
-"Undefined" = "Undefined";
+"movie_rank_caption" = "Rank";
+"undefined" = "Undefined";
+"error" = "Error";
+"ok_button_title" = "OK";

@@ -14,7 +14,7 @@ final class HttpRequestHelper {
     private let host = "imdb-api.com"
     private let queryApiKeyParameterArr = [URLQueryItem(name: "apiKey", value: "k_e14w1h3a")]
     
-    private init() { }
+    //MARK: - Internal methods
     
     func imdbApiGetRequest(path: String,
                            params: [String: String] = ["": ""],
