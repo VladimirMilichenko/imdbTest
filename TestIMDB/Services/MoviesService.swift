@@ -7,11 +7,6 @@
 
 import Foundation
 
-protocol MoviesServiceProtocol {
-    func getMoviesFromApi(completion: @escaping (Result<[Movie], Error>) -> ())
-    func getMoviesFromCache(completion: @escaping (Result<[Movie], Error>) -> ())
-}
-
 class MoviesService: MoviesServiceProtocol {
     func getMoviesFromApi(completion: @escaping (Result<[Movie], Error>) -> ()) {
         let path = "/API/Top250Movies"

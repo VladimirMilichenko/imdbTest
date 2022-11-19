@@ -12,4 +12,5 @@ struct MovieTableViewCellViewModel {
     var title: String
     var rank: String
     var imageUrl: URL
+    var image: UIImage?
 }

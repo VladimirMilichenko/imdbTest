@@ -27,25 +27,17 @@ class MoviesViewModel {
     //MARK: - Internal methods
     
     func getMovies() {
-        if let bundleURL = Bundle.main.url(forResource: "Movies", withExtension: "json"),
-           let data = try? Data(contentsOf: bundleURL) {
-            guard let moviesModel = try? JSONDecoder().decode(Movies.self, from: data) else {
-                return
+        moviesService.getMoviesFromApi() { [weak self] result in
+            switch result {
+            case .success(let movies):
+                let range = 0...9
+                if movies.count >= range.count {
+                    self?.fetchMovies(Array(movies[range]))
+                }
+            case .failure(let error):
+                self?.viewModelCompletion?(error)
             }
-            
-            self.fetchMovies(moviesModel.items)
         }
-//        moviesService.getMoviesFromApi() { [weak self] result in
-//            switch result {
-//            case .success(let movies):
-//                let range = 0...9
-//                if movies.count >= range.count {
-//                    self?.fetchMovies(Array(movies[range]))
-//                }
-//            case .failure(let error):
-//                self?.viewModelCompletion?(error)
-//            }
-//        }
     }
     
     func getMovieeCellViewModel(at indexPath: IndexPath) -> MovieTableViewCellViewModel {

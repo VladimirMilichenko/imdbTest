@@ -12,6 +12,7 @@ class MoviesViewController: UITableViewController {
     
     lazy var viewModel: MoviesViewModel = {
         return MoviesViewModel(moviesService: moviesService)
+//        return MoviesViewModel(moviesService: MoviesTestDataService())
     }()
     
     //MARK: - UITableViewController override
@@ -31,6 +32,14 @@ class MoviesViewController: UITableViewController {
                     self?.tableView.reloadData()
                 }
             }
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destinationVC = segue.destination as? CharactersCountViewController,
+           let indexPath = tableView.indexPathForSelectedRow {
+            let title = viewModel.getMovieeCellViewModel(at: indexPath).title
+            destinationVC.viewModel = CharactersCountViewModel(title: title)
         }
     }
     

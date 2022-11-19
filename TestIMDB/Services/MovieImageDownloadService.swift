@@ -1,23 +1,25 @@
 //
-//  UIImageView+CachedImage.swift
+//  MovieImageDownloadService.swift
 //  TestIMDB
 //
-//  Created by Vladimir Milichenko on 11/18/22.
+//  Created by Vladimir Milichenko on 11/19/22.
 //
 
 import UIKit
 
-extension UIImageView {
-    func loadImage(from url: URL) {
+final class MovieImageDownloadService {
+    
+    //MARK: - Internal methods
+    
+    static func loadImage(from url: URL, completion: @escaping (UIImage?) -> Void) -> Cancellable? {
         let request = URLRequest(url: url)
+        var dataTask: URLSessionTask?
         
         if let data = URLCache.shared.cachedResponse(for: request)?.data,
            let image = UIImage(data: data) {
-            DispatchQueue.main.async {
-                self.image = image
-            }
+            completion(image)
         } else {
-            URLSession.shared.dataTask(with: request) { [weak self] (data, response, error) in
+            dataTask = URLSession.shared.dataTask(with: request) { data, response, error in
                 guard let data = data,
                       let httpResponse = response as? HTTPURLResponse, 200...299 ~= httpResponse.statusCode,
                       let image = UIImage(data: data) else {
@@ -27,10 +29,12 @@ extension UIImageView {
                 let cachedData = CachedURLResponse(response: httpResponse, data: data)
                 URLCache.shared.storeCachedResponse(cachedData, for: request)
                 
-                DispatchQueue.main.async {
-                    self?.image = image
-                }
-            }.resume()
+                completion(image)
+            }
+            
+            dataTask?.resume()
         }
+        
+        return dataTask
     }
 }

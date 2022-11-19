@@ -14,6 +14,11 @@ class MovieTableViewCell: UITableViewCell {
     @IBOutlet weak var movieTitleTextView: UITextView!
     @IBOutlet weak var movieRankLabel: UILabel!
     @IBOutlet weak var movieImageView: UIImageView!
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+    
+    //MARK: - Properties
+    
+    private var imageRequest: Cancellable?
     
     //MARK: - Class methods
     
@@ -23,6 +28,8 @@ class MovieTableViewCell: UITableViewCell {
     
     var cellViewModel: MovieTableViewCellViewModel? {
         didSet {
+            activityIndicatorView.startAnimating()
+            
             movieTitleTextView.text = cellViewModel?.title
             
             let rankStr = NSLocalizedString("movie_rank_caption", comment: "")
@@ -31,7 +38,12 @@ class MovieTableViewCell: UITableViewCell {
             movieRankLabel.text = rankStr + ": " + (cellViewModel?.rank ?? undefinedStr)
             
             if let imgUrl = cellViewModel?.imageUrl {
-                movieImageView?.loadImage(from: imgUrl)
+                imageRequest = MovieImageDownloadService.loadImage(from: imgUrl) { [weak self] image in
+                    DispatchQueue.main.async {
+                        self?.movieImageView.image = image
+                        self?.activityIndicatorView.stopAnimating()
+                    }
+                }
             }
         }
     }
@@ -41,8 +53,8 @@ class MovieTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
 
-        movieTitleTextView.text = nil
-        movieRankLabel.text = nil
         movieImageView.image = nil
+        
+        imageRequest?.cancel()
     }
 }
