@@ -6,29 +6,34 @@
 //
 
 import UIKit
-
-class MoviesViewController: UITableViewController {
+//TODO: Pull to refresh from online
+class MoviesTableViewController: UITableViewController {
     private let moviesService = MoviesService()
+    private var activityIndicatorView: UIActivityIndicatorView!
     
     lazy var viewModel: MoviesViewModel = {
-        return MoviesViewModel(moviesService: moviesService)
-//        return MoviesViewModel(moviesService: MoviesTestDataService())
+//        return MoviesViewModel(moviesService: moviesService)
+        return MoviesViewModel(moviesService: MoviesTestDataService())
     }()
     
     //MARK: - UITableViewController override
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityIndicatorView = UIActivityIndicatorView(frame: view.bounds)
+        activityIndicatorView.style = .large
         
-        viewModel.getMovies()
+        tableView.backgroundView = activityIndicatorView
+        
+        self.updateMovies()
         
         viewModel.viewModelCompletion = { [weak self] error in
-            if let err = error {
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                self?.activityIndicatorView.stopAnimating()
+                
+                if let err = error {
                     self?.showAlertWithError(err)
-                }
-            } else {
-                DispatchQueue.main.async {
+                } else {
                     self?.tableView.reloadData()
                 }
             }
@@ -36,11 +41,22 @@ class MoviesViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destinationVC = segue.destination as? CharactersCountViewController,
+        if let destinationVC = segue.destination as? CharactersCountTableViewController,
            let indexPath = tableView.indexPathForSelectedRow {
-            let title = viewModel.getMovieeCellViewModel(at: indexPath).title
-            destinationVC.viewModel = CharactersCountViewModel(title: title)
+            let viewModel = viewModel.getMovieeCellViewModel(at: indexPath)
+            destinationVC.title = viewModel.title
+            
+            destinationVC.viewModel = CharactersCountViewModel(title: viewModel.title,
+                                                               imageUrl: viewModel.imageUrl,
+                                                               image: viewModel.image)
         }
+    }
+    
+    //MARK: - Private methods
+    
+    private func updateMovies() {
+        activityIndicatorView.startAnimating()
+        viewModel.getMovies()
     }
     
     //MARK: - UITableViewDataSource override

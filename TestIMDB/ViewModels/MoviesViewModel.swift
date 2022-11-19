@@ -27,7 +27,7 @@ class MoviesViewModel {
     //MARK: - Internal methods
     
     func getMovies() {
-        moviesService.getMoviesFromApi() { [weak self] result in
+        moviesService.getMovies() { [weak self] result in
             switch result {
             case .success(let movies):
                 let range = 0...9

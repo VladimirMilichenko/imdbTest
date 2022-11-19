@@ -8,13 +8,11 @@
 import Foundation
 
 class MoviesTestDataService: MoviesServiceProtocol {
-    func getMoviesFromApi(completion: @escaping (Result<[Movie], Error>) -> ()) {
+    func getMovies(completion: @escaping (Result<[Movie], Error>) -> ()) {
         completion(getMoviesFromJson())
     }
-    
-    func getMoviesFromCache(completion: @escaping (Result<[Movie], Error>) -> ()) {
-        completion(getMoviesFromJson())
-    }
+//    [Movie]
+    // title == "1234"
     
     private func getMoviesFromJson() -> Result<[Movie], Error> {
         if let bundleURL = Bundle.main.url(forResource: "Movies", withExtension: "json"),

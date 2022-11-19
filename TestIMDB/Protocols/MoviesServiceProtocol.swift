@@ -8,6 +8,5 @@
 import Foundation
 
 protocol MoviesServiceProtocol {
-    func getMoviesFromApi(completion: @escaping (Result<[Movie], Error>) -> ())
-    func getMoviesFromCache(completion: @escaping (Result<[Movie], Error>) -> ())
+    func getMovies(completion: @escaping (Result<[Movie], Error>) -> ())
 }

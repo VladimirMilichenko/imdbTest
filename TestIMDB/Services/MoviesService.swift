@@ -8,9 +8,10 @@
 import Foundation
 
 class MoviesService: MoviesServiceProtocol {
-    func getMoviesFromApi(completion: @escaping (Result<[Movie], Error>) -> ()) {
+    func getMovies(completion: @escaping (Result<[Movie], Error>) -> ()) {
         let path = "/API/Top250Movies"
         
+        //TODO: Remove helper, try to use 2 different services (online, offline)
         HttpRequestHelper.shared.imdbApiGetRequest(path: path) { result in
             switch result {
             case .success(let data):

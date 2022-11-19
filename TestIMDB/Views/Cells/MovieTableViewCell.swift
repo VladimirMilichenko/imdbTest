@@ -28,8 +28,6 @@ class MovieTableViewCell: UITableViewCell {
     
     var cellViewModel: MovieTableViewCellViewModel? {
         didSet {
-            activityIndicatorView.startAnimating()
-            
             movieTitleTextView.text = cellViewModel?.title
             
             let rankStr = NSLocalizedString("movie_rank_caption", comment: "")
@@ -37,10 +35,14 @@ class MovieTableViewCell: UITableViewCell {
             
             movieRankLabel.text = rankStr + ": " + (cellViewModel?.rank ?? undefinedStr)
             
-            if let imgUrl = cellViewModel?.imageUrl {
-                imageRequest = MovieImageDownloadService.loadImage(from: imgUrl) { [weak self] image in
+            if let image = cellViewModel?.image {
+                self.movieImageView.image = image
+            } else if let cellViewModel = self.cellViewModel {
+                activityIndicatorView.startAnimating()
+                
+                imageRequest = cellViewModel.loadImage() { [weak self] in
                     DispatchQueue.main.async {
-                        self?.movieImageView.image = image
+                        self?.movieImageView.image = cellViewModel.image
                         self?.activityIndicatorView.stopAnimating()
                     }
                 }
@@ -52,6 +54,8 @@ class MovieTableViewCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+        
+        activityIndicatorView.stopAnimating()
 
         movieImageView.image = nil
         

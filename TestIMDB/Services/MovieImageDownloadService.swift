@@ -9,9 +9,9 @@ import UIKit
 
 final class MovieImageDownloadService {
     
-    //MARK: - Internal methods
+    //MARK: - Static methods
     
-    static func loadImage(from url: URL, completion: @escaping (UIImage?) -> Void) -> Cancellable? {
+    static func loadImage(from url: URL, completion: @escaping (UIImage?) -> ()) -> Cancellable? {
         let request = URLRequest(url: url)
         var dataTask: URLSessionTask?
         
@@ -20,16 +20,16 @@ final class MovieImageDownloadService {
             completion(image)
         } else {
             dataTask = URLSession.shared.dataTask(with: request) { data, response, error in
-                guard let data = data,
-                      let httpResponse = response as? HTTPURLResponse, 200...299 ~= httpResponse.statusCode,
-                      let image = UIImage(data: data) else {
-                    return
+                if let data = data,
+                   let httpResponse = response as? HTTPURLResponse, 200...299 ~= httpResponse.statusCode,
+                   let image = UIImage(data: data) {
+                    let cachedData = CachedURLResponse(response: httpResponse, data: data)
+                    URLCache.shared.storeCachedResponse(cachedData, for: request)
+                    
+                    completion(image)
+                } else {
+                    completion(nil)
                 }
-                
-                let cachedData = CachedURLResponse(response: httpResponse, data: data)
-                URLCache.shared.storeCachedResponse(cachedData, for: request)
-                
-                completion(image)
             }
             
             dataTask?.resume()
