@@ -33,7 +33,7 @@ class MovieTableViewCell: UITableViewCell {
             let rankStr = NSLocalizedString("movie_rank_caption", comment: "")
             let undefinedStr = NSLocalizedString("undefined", comment: "")
             
-            movieRankLabel.text = rankStr + ": " + (cellViewModel?.rank ?? undefinedStr)
+            movieRankLabel.text = cellViewModel?.rank
             
             if let image = cellViewModel?.image {
                 self.movieImageView.image = image
