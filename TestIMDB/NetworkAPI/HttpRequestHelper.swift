@@ -8,30 +8,28 @@
 import Foundation
 
 final class HttpRequestHelper {
-    static let shared = HttpRequestHelper()
-    
-    private let scheme = "https"
-    private let host = "imdb-api.com"
-    private let queryApiKeyParameterArr = [URLQueryItem(name: "apiKey", value: "k_e14w1h3a")]
+    private static let scheme = "https"
+    private static let host = "imdb-api.com"
+    private static let queryApiKeyParameterArr = [URLQueryItem(name: "apiKey", value: "k_e14w1h3a")]
     
     //MARK: - Internal methods
     
-    func imdbApiGetRequest(path: String,
-                           params: [String: String] = ["": ""],
-                           completion: @escaping (Result<Data, Error>) -> ()) {
+    static func imdbApiGetRequest(path: String,
+                                  params: [String: String] = ["": ""],
+                                  completion: @escaping (Result<Data, Error>) -> ()) {
         var queryComponents = URLComponents()
         queryComponents.path = path
-        queryComponents.scheme = scheme
-        queryComponents.host = host
+        queryComponents.scheme = HttpRequestHelper.scheme
+        queryComponents.host = HttpRequestHelper.host
         
         if params.keys.count > 0 {
             let paramsQueryItems = params.map { key, value in
                 URLQueryItem(name: key, value: value)
             }
             
-            queryComponents.queryItems = queryApiKeyParameterArr + paramsQueryItems
+            queryComponents.queryItems = HttpRequestHelper.queryApiKeyParameterArr + paramsQueryItems
         } else {
-            queryComponents.queryItems = queryApiKeyParameterArr
+            queryComponents.queryItems = HttpRequestHelper.queryApiKeyParameterArr
         }
         
         var request = URLRequest(url: queryComponents.url!)

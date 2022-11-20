@@ -17,11 +17,14 @@ class MoviesViewModel {
     var viewModelCompletion: ((Error?) -> ())?
     
     private var moviesService: MoviesServiceProtocol
+
+    private(set) var maxCount: Int
     
     //MARK: - Lifecycle
     
-    init(moviesService: MoviesServiceProtocol) {
+    init(moviesService: MoviesServiceProtocol, maxCount: Int = 10) {
         self.moviesService = moviesService
+        self.maxCount = maxCount
     }
     
     //MARK: - Internal methods
@@ -30,10 +33,11 @@ class MoviesViewModel {
         moviesService.getMovies() { [weak self] result in
             switch result {
             case .success(let movies):
-                let range = 0...9
-                if movies.count >= range.count {
-                    self?.fetchMovies(Array(movies[range]))
-                }
+                let maxCount = self?.maxCount ?? 0
+                let count = movies.count <= maxCount ? movies.count : maxCount
+                let range = 0..<count
+                
+                self?.fetchMovies(Array(movies[range]))
             case .failure(let error):
                 self?.viewModelCompletion?(error)
             }
@@ -45,7 +49,11 @@ class MoviesViewModel {
     }
     
     func getFilteredMovieCellViewModels(by searchText: String) -> [MovieTableViewCellViewModel] {
-        return movieCellViewModels.filter { $0.title.lowercased().contains(searchText.lowercased()) }
+        let text = searchText.lowercased().trimmingCharacters(in: .whitespaces)
+        
+        return movieCellViewModels.filter {
+            $0.title.lowercased().contains(text)
+        }
     }
     
     func getFilteredMovieCellViewModel(by searchText: String, indexPath: IndexPath) -> MovieTableViewCellViewModel {

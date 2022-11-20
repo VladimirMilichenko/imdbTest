@@ -18,7 +18,7 @@ class MovieTableViewCell: UITableViewCell {
     
     //MARK: - Properties
     
-    private var imageRequest: Cancellable?
+    private var imageRequestTask: URLSessionTask?
     
     //MARK: - Class methods
     
@@ -36,7 +36,7 @@ class MovieTableViewCell: UITableViewCell {
             } else if let cellViewModel = self.cellViewModel {
                 activityIndicatorView.startAnimating()
                 
-                imageRequest = cellViewModel.loadImage() { [weak self] success in
+                imageRequestTask = cellViewModel.loadImage() { [weak self] success in
                     if success {
                         DispatchQueue.main.async {
                             self?.movieImageView.image = cellViewModel.image
@@ -53,7 +53,7 @@ class MovieTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
 
-        imageRequest?.cancel()
+        imageRequestTask?.cancel()
         movieImageView.image = nil
         activityIndicatorView.stopAnimating()
     }

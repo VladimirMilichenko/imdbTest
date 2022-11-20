@@ -18,7 +18,7 @@ class ViewModel {
         self.image = image
     }
     
-    func loadImage(completion: @escaping (Bool) -> ()) -> Cancellable? {
+    func loadImage(completion: @escaping (Bool) -> ()) -> URLSessionTask? {
         return MovieImageDownloadService.loadImage(from: self.imageUrl) { image in
             if let img = image {
                 self.image = img

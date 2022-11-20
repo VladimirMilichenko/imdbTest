@@ -19,11 +19,11 @@ class CharactersCountViewModel: ViewModel {
         return title
             .filter { !$0.isWhitespace }
             .lowercased()
-            .reduce(into: [Character: Int]()) { dict, character in
-                if let val = dict[character] {
-                    dict[character] = val + 1
+            .reduce(into: [Character: Int]()) {
+                if let val = $0[$1] {
+                    $0[$1] = val + 1
                 } else {
-                    dict[character] = 1
+                    $0[$1] = 1
                 }
             }.sorted(by: <)
             .map { (String($0), $1) }

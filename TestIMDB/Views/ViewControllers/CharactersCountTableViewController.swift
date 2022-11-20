@@ -21,7 +21,7 @@ class CharactersCountTableViewController: UITableViewController {
     var viewModel: CharactersCountViewModel?
     
     private var charactersOccurencies: [(String, Int)]?
-    private var imageRequest: Cancellable?
+    private var imageRequest: URLSessionTask?
     
     //MARK: - UIViewController override
     
@@ -65,9 +65,11 @@ class CharactersCountTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier)!
-        let (character, count) = charactersOccurencies![indexPath.row]
         
         var content = cell.defaultContentConfiguration()
+        
+        let (character, count) = charactersOccurencies![indexPath.row]
+        
         content.text = character
         content.secondaryText = String(count)
         

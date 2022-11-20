@@ -85,6 +85,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Movies" id="QWZ-Qb-zj1"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="Zyt-CN-2ju">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <connections>
                             <action selector="refreshControlAction:" destination="Qju-pa-gFk" eventType="valueChanged" id="M1K-1W-WAe"/>
@@ -110,7 +111,7 @@
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AFL-w2-mRs">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="393"/>
                                 </imageView>
-                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="SIZ-aX-4q1">
+                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="SIZ-aX-4q1">
                                     <rect key="frame" x="178" y="178" width="37" height="37"/>
                                 </activityIndicatorView>
                             </subviews>

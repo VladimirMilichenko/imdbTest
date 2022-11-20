@@ -11,7 +11,7 @@ final class MovieImageDownloadService {
     
     //MARK: - Static methods
     
-    static func loadImage(from url: URL, completion: @escaping (UIImage?) -> ()) -> Cancellable? {
+    static func loadImage(from url: URL, completion: @escaping (UIImage?) -> ()) -> URLSessionTask? {
         let request = URLRequest(url: url)
         var dataTask: URLSessionTask?
         

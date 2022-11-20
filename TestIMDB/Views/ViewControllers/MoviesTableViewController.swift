@@ -8,16 +8,12 @@
 import UIKit
 //TODO: Pull to refresh from online
 class MoviesTableViewController: UITableViewController {
-    
-    //MARK: Properties
-    
-    private let moviesService = MoviesService()
     private var activityIndicatorView: UIActivityIndicatorView!
     private var searchController: UISearchController!
     
     lazy var viewModel: MoviesViewModel = {
 //        return MoviesViewModel(moviesService: moviesService)
-        return MoviesViewModel(moviesService: MoviesTestDataService())
+        return MoviesViewModel(moviesService: TestDataMoviesService())
     }()
     
     var isFiltering: Bool {
@@ -110,6 +106,8 @@ class MoviesTableViewController: UITableViewController {
         return cell
     }
 }
+
+//MARK: - UISearchResultsUpdating
 
 extension MoviesTableViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
