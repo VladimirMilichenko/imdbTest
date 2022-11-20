@@ -33,10 +33,12 @@ class CharactersCountTableViewController: UITableViewController {
         } else if let viewModel = self.viewModel {
             activityIndicatorView.startAnimating()
             
-            imageRequest = viewModel.loadImage() { [weak self] in
-                DispatchQueue.main.async {
-                    self?.headerImageView.image = viewModel.image
-                    self?.activityIndicatorView.stopAnimating()
+            imageRequest = viewModel.loadImage() { [weak self] success in
+                if success {
+                    DispatchQueue.main.async {
+                        self?.headerImageView.image = viewModel.image
+                        self?.activityIndicatorView.stopAnimating()
+                    }
                 }
             }
         }

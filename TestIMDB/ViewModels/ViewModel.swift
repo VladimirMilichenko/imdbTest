@@ -18,10 +18,14 @@ class ViewModel {
         self.image = image
     }
     
-    func loadImage(completion: @escaping () -> ()) -> Cancellable? {
+    func loadImage(completion: @escaping (Bool) -> ()) -> Cancellable? {
         return MovieImageDownloadService.loadImage(from: self.imageUrl) { image in
-            self.image = image
-            completion()
+            if let img = image {
+                self.image = img
+                completion(true)
+            } else {
+                completion(false)
+            }
         }
     }
 }

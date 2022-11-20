@@ -40,8 +40,17 @@ class MoviesViewModel {
         }
     }
     
-    func getMovieeCellViewModel(at indexPath: IndexPath) -> MovieTableViewCellViewModel {
+    func getMovieCellViewModel(at indexPath: IndexPath) -> MovieTableViewCellViewModel {
         return movieCellViewModels[indexPath.row]
+    }
+    
+    func getFilteredMovieCellViewModels(by searchText: String) -> [MovieTableViewCellViewModel] {
+        return movieCellViewModels.filter { $0.title.lowercased().contains(searchText.lowercased()) }
+    }
+    
+    func getFilteredMovieCellViewModel(by searchText: String, indexPath: IndexPath) -> MovieTableViewCellViewModel {
+        let filtered = getFilteredMovieCellViewModels(by: searchText)
+        return filtered[indexPath.row]
     }
     
     //MARK: - Private methods
