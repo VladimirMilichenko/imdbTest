@@ -15,7 +15,7 @@ final class CoreDataManager {
     }
     
     private lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "TestIMDB")
+        let container = NSPersistentContainer(name: "MoviesManagedModel")
         
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
@@ -74,39 +74,23 @@ final class CoreDataManager {
                 try managedObjectContext.save()
             } catch {
                 let nserror = error as NSError
-                fatalError("Coldn't save managed context with error: \(nserror), \(nserror.userInfo)")
+#if DEBUG
+                print("Coldn't save managed context with error: \(nserror), \(nserror.userInfo)")
+#endif
             }
         }
     }
     
     private func clearStorage() {
-        let isInMemoryStore = persistentContainer.persistentStoreDescriptions.reduce(false) {
-            return $0 ? true : $1.type == NSInMemoryStoreType
-        }
-
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: MovieManagedObject.self))
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         
-        // NSBatchDeleteRequest is not supported for in-memory stores
-        if isInMemoryStore {
-            do {
-                let entities = try managedObjectContext.fetch(fetchRequest)
-                for entity in entities {
-                    managedObjectContext.delete(entity as! NSManagedObject)
-                }
-            } catch let error as NSError {
+        do {
+            try managedObjectContext.execute(batchDeleteRequest)
+        } catch let error as NSError {
 #if DEBUG
-                print(error)
+            print("Clear storage erro: \(error)")
 #endif
-            }
-        } else {
-            let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-            do {
-                try managedObjectContext.execute(batchDeleteRequest)
-            } catch let error as NSError {
-#if DEBUG
-                print(error)
-#endif
-            }
         }
     }
 }

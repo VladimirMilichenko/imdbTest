@@ -12,7 +12,7 @@ class MoviesTableViewController: UITableViewController {
     private var searchController: UISearchController!
     
     lazy var viewModel: MoviesViewModel = {
-//        return MoviesViewModel(moviesService: moviesService)
+//        return MoviesViewModel(moviesService: ApiMoviesService())
         return MoviesViewModel(moviesService: TestDataMoviesService())
     }()
     

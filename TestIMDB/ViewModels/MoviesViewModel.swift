@@ -17,7 +17,8 @@ class MoviesViewModel {
     var viewModelCompletion: ((Error?) -> ())?
     
     private var moviesService: MoviesServiceProtocol
-
+    private var needToCacheCheck: Bool = true
+    
     private(set) var maxCount: Int
     
     //MARK: - Lifecycle
@@ -30,17 +31,16 @@ class MoviesViewModel {
     //MARK: - Internal methods
     
     func getMovies() {
-        moviesService.getMovies() { [weak self] result in
-            switch result {
-            case .success(let movies):
-                let maxCount = self?.maxCount ?? 0
-                let count = movies.count <= maxCount ? movies.count : maxCount
-                let range = 0..<count
-                
-                self?.fetchMovies(Array(movies[range]))
-            case .failure(let error):
-                self?.viewModelCompletion?(error)
+        if needToCacheCheck {
+            needToCacheCheck = false
+            
+            if let movies = CoreDataManager.shared.loadMovies(), movies.count > 0 {
+                self.fetchMovies(movies)
+            } else {
+                getMoviesFromApi()
             }
+        } else {
+            getMoviesFromApi()
         }
     }
     
@@ -63,10 +63,30 @@ class MoviesViewModel {
     
     //MARK: - Private methods
     
-    private func fetchMovies(_ movies: [Movie]) {
+    private func getMoviesFromApi() {
+        moviesService.getMovies() { [weak self] result in
+            switch result {
+            case .success(let movies):
+                self?.fetchMovies(movies, needToCache: true)
+            case .failure(let error):
+                self?.viewModelCompletion?(error)
+            }
+        }
+    }
+    
+    private func fetchMovies(_ movies: [Movie], needToCache: Bool = false) {
+        let count = movies.count <= maxCount ? movies.count : maxCount
+        let range = 0..<count
+        
+        let moviesWithRange = Array(movies[range]).sorted(by: { (Int($0.rank) ?? 0) < (Int($1.rank) ?? 0) })
+        
+        if needToCache {
+            CoreDataManager.shared.saveMovies(moviesWithRange)
+        }
+        
         var vms = [MovieTableViewCellViewModel]()
         
-        for movie in movies {
+        for movie in moviesWithRange {
             let cellViewModel = MovieTableViewCellViewModel(id: movie.id,
                                                             title: movie.title,
                                                             rank: movie.rank,

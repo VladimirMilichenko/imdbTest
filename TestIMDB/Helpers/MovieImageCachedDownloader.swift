@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class MovieImageDownloadService {
+final class MovieImageCachedDownloader {
     
     //MARK: - Static methods
     

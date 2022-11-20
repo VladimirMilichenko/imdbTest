@@ -19,7 +19,7 @@ class ViewModel {
     }
     
     func loadImage(completion: @escaping (Bool) -> ()) -> URLSessionTask? {
-        return MovieImageDownloadService.loadImage(from: self.imageUrl) { image in
+        return MovieImageCachedDownloader.loadImage(from: self.imageUrl) { image in
             if let img = image {
                 self.image = img
                 completion(true)
