@@ -32,23 +32,9 @@ class MoviesTableViewController: UITableViewController {
         
         tableView.backgroundView = activityIndicatorView
         
-        viewModel.viewModelCompletion = { [weak self] error in
-            DispatchQueue.main.async {
-                self?.activityIndicatorView.stopAnimating()
-                
-                if let _ = self?.refreshControl?.isRefreshing {
-                    self?.refreshControl?.endRefreshing()
-                }
-                
-                if let err = error {
-                    self?.showAlertWithError(err)
-                } else {
-                    self?.tableView.reloadData()
-                }
-            }
-        }
+        viewModel.delegate = self
         
-        self.updateMovies()
+        self.updateMovies(useCache: true)
         
         searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
@@ -79,9 +65,9 @@ class MoviesTableViewController: UITableViewController {
     
     //MARK: - Private methods
     
-    private func updateMovies() {
+    private func updateMovies(useCache: Bool = false) {
         activityIndicatorView.startAnimating()
-        viewModel.getMovies()
+        viewModel.getMovies(needToCacheCheck: useCache)
     }
     
     private func cellViewModel(at indexPath: IndexPath) -> MovieTableViewCellViewModel {
@@ -109,6 +95,26 @@ class MoviesTableViewController: UITableViewController {
         cell.cellViewModel = cellViewModel(at: indexPath)
         
         return cell
+    }
+}
+
+//MARK: - MoviesViewModelDelegate
+
+extension MoviesTableViewController: MoviesViewModelDelegate {
+    func viewModelMoviesDidUpdated(_ sender: MoviesViewModel, error: Error?) {
+        DispatchQueue.main.async {
+            self.activityIndicatorView.stopAnimating()
+            
+            if let _ = self.refreshControl?.isRefreshing {
+                self.refreshControl?.endRefreshing()
+            }
+            
+            if let err = error {
+                self.showAlertWithError(err)
+            } else {
+                self.tableView.reloadData()
+            }
+        }
     }
 }
 

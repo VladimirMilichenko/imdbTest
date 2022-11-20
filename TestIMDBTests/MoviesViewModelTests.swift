@@ -25,7 +25,7 @@ final class MoviesViewModelTest: XCTestCase {
                                 title: "22",
                                 rank: "22",
                                 imageUrl: URL(string: "http://22.png")!),
-                          at: 2)
+                          at: 1)
             
             completion(.success(movies))
         }
@@ -47,32 +47,7 @@ final class MoviesViewModelTest: XCTestCase {
         // Any test you write for XCTest can be annotated as throws and async.
         // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
         // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-        
-        moviesViewModel.viewModelCompletion = { error in
-            XCTAssert(error == nil)
-            
-            let movieCellViewModels = self.moviesViewModel.movieCellViewModels
-            
-            XCTAssertFalse(movieCellViewModels.count > self.moviesViewModel.maxCount)
-            
-            let fourth = self.moviesViewModel.getMovieCellViewModel(at: IndexPath(row: 3, section: 0))
-            XCTAssertTrue(fourth.id == "3")
-            XCTAssertTrue(fourth.title == "3")
-            XCTAssertTrue(fourth.rank == "3")
-            XCTAssertTrue(fourth.imageUrl == URL(string: "http://3.png")!)
-            
-            let filtered = self.moviesViewModel.getFilteredMovieCellViewModels(by: "2")
-            XCTAssertTrue(filtered.count == 2)
-            
-            let indexPath = IndexPath(row: 1, section: 0)
-            let filteredAt = self.moviesViewModel.getFilteredMovieCellViewModel(by: "2", indexPath: indexPath)
-            
-            XCTAssertTrue(filteredAt.id == "22")
-            XCTAssertTrue(filteredAt.title == "22")
-            XCTAssertTrue(filteredAt.rank == "22")
-            XCTAssertTrue(filteredAt.imageUrl == URL(string: "http://22.png")!)
-        }
-        
+        moviesViewModel.delegate = self
         moviesViewModel.getMovies()
     }
 
@@ -83,4 +58,31 @@ final class MoviesViewModelTest: XCTestCase {
         }
     }
 
+}
+
+extension MoviesViewModelTest: MoviesViewModelDelegate {
+    func viewModelMoviesDidUpdated(_ sender: MoviesViewModel, error: Error?) {
+        XCTAssert(error == nil)
+        
+        let movieCellViewModels = self.moviesViewModel.movieCellViewModels
+        
+        XCTAssertFalse(movieCellViewModels.count > self.moviesViewModel.maxCount)
+        
+        let fourth = moviesViewModel.getMovieCellViewModel(at: IndexPath(row: 3, section: 0))
+        XCTAssertTrue(fourth.id == "22")
+        XCTAssertTrue(fourth.title == "22")
+        XCTAssertTrue(fourth.rank == "22")
+        XCTAssertTrue(fourth.imageUrl == URL(string: "http://22.png")!)
+        
+        let filtered = self.moviesViewModel.getFilteredMovieCellViewModels(by: "2")
+        XCTAssertTrue(filtered.count == 2)
+        
+        let indexPath = IndexPath(row: 1, section: 0)
+        let filteredAt = self.moviesViewModel.getFilteredMovieCellViewModel(by: "2", indexPath: indexPath)
+        
+        XCTAssertTrue(filteredAt.id == "22")
+        XCTAssertTrue(filteredAt.title == "22")
+        XCTAssertTrue(filteredAt.rank == "22")
+        XCTAssertTrue(filteredAt.imageUrl == URL(string: "http://22.png")!)
+    }
 }

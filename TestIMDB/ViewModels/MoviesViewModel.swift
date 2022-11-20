@@ -7,19 +7,22 @@
 
 import Foundation
 
+protocol MoviesViewModelDelegate: AnyObject {
+    func viewModelMoviesDidUpdated(_ sender: MoviesViewModel, error: Error?)
+}
+
 class MoviesViewModel {
-    private static let defaultMaxCount = 10
+    weak var delegate: MoviesViewModelDelegate?
+    
+    static let defaultMaxCount = 10
     
     var movieCellViewModels = [MovieTableViewCellViewModel]() {
         didSet {
-            viewModelCompletion?(nil)
+            delegate?.viewModelMoviesDidUpdated(self, error: nil)
         }
     }
     
-    var viewModelCompletion: ((Error?) -> ())?
-    
     private var moviesService: MoviesServiceProtocol
-    private var needToCacheCheck: Bool = true
     
     private(set) var maxCount: Int
     
@@ -32,10 +35,8 @@ class MoviesViewModel {
     
     //MARK: - Internal methods
     
-    func getMovies() {
+    func getMovies(needToCacheCheck: Bool = false) {
         if needToCacheCheck {
-            needToCacheCheck = false
-            
             if let movies = CoreDataManager.shared.loadMovies(), movies.count > 0 {
                 self.fetchMovies(movies)
             } else {
@@ -66,12 +67,12 @@ class MoviesViewModel {
     //MARK: - Private methods
     
     private func getMoviesFromApi() {
-        moviesService.getMovies() { [weak self] result in
+        moviesService.getMovies() { result in
             switch result {
             case .success(let movies):
-                self?.fetchMovies(movies, needToCache: true)
+                self.fetchMovies(movies, needToCache: true)
             case .failure(let error):
-                self?.viewModelCompletion?(error)
+                self.delegate?.viewModelMoviesDidUpdated(self, error: error)
             }
         }
     }

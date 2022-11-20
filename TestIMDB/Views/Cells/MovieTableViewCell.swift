@@ -12,7 +12,6 @@ class MovieTableViewCell: UITableViewCell {
     //MARK: IBOutlet
     
     @IBOutlet weak var movieTitleTextView: UITextView!
-    @IBOutlet weak var movieRankLabel: UILabel!
     @IBOutlet weak var movieImageView: UIImageView!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     
@@ -28,8 +27,9 @@ class MovieTableViewCell: UITableViewCell {
     
     var cellViewModel: MovieTableViewCellViewModel? {
         didSet {
-            movieTitleTextView.text = cellViewModel?.title
-            movieRankLabel.text = cellViewModel?.rank
+            if let rank = cellViewModel?.rank, let title = cellViewModel?.title {
+                movieTitleTextView.text = rank + ". " + title
+            }
             
             if let image = cellViewModel?.image {
                 self.movieImageView.image = image

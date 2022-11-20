@@ -32,6 +32,8 @@
 		E7CE8EA7292A65C300C2D1EE /* MovieImageCachedDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CFBCE02928F50E0006403B /* MovieImageCachedDownloader.swift */; };
 		E7CE8EAD292A841A00C2D1EE /* ApiMoviesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CE8EAC292A841A00C2D1EE /* ApiMoviesService.swift */; };
 		E7CE8EB6292A9B9900C2D1EE /* CustomTransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CE8EB5292A9B9900C2D1EE /* CustomTransitionAnimator.swift */; };
+		E7CE8EBB292AB72D00C2D1EE /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CE8E8E292A40A100C2D1EE /* CoreDataManager.swift */; };
+		E7CE8EBC292AB75C00C2D1EE /* MoviesManagedModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E7A5490F29284526006A8BEE /* MoviesManagedModel.xcdatamodeld */; };
 		E7CFBCDF2928D61A0006403B /* TestDataMoviesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CFBCDE2928D61A0006403B /* TestDataMoviesService.swift */; };
 		E7CFBCE12928F50E0006403B /* MovieImageCachedDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CFBCE02928F50E0006403B /* MovieImageCachedDownloader.swift */; };
 		E7CFBCEC292901CB0006403B /* CharactersCountTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CFBCEB292901CB0006403B /* CharactersCountTableViewController.swift */; };
@@ -390,12 +392,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7CE8EBC292AB75C00C2D1EE /* MoviesManagedModel.xcdatamodeld in Sources */,
 				E7CE8EA4292A658C00C2D1EE /* MovieTableViewCellViewModel.swift in Sources */,
 				E7CE8EA1292A623B00C2D1EE /* MoviesServiceProtocol.swift in Sources */,
 				E7CE8E99292A612400C2D1EE /* MoviesViewModelTests.swift in Sources */,
 				E7CE8EA2292A62AA00C2D1EE /* Movie.swift in Sources */,
 				E7CE8EA5292A65A300C2D1EE /* ViewModel.swift in Sources */,
 				E7CE8EA7292A65C300C2D1EE /* MovieImageCachedDownloader.swift in Sources */,
+				E7CE8EBB292AB72D00C2D1EE /* CoreDataManager.swift in Sources */,
 				E7CE8EA3292A63E900C2D1EE /* MoviesViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

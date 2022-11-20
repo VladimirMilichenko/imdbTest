@@ -11,6 +11,7 @@ class ApiMoviesService {
     private let scheme = "https"
     private let host = "imdb-api.com"
     private let queryApiKeyParameterArr = [URLQueryItem(name: "apiKey", value: "k_e14w1h3a")]
+    private let path = "/API/Top250Movies"
         
     //MARK: - Internal methods
     
@@ -66,8 +67,6 @@ class ApiMoviesService {
 
 extension ApiMoviesService: MoviesServiceProtocol {
     func getMovies(completion: @escaping (Result<[Movie], Error>) -> ()) {
-        let path = "/API/Top250Movies"
-        
         imdbApiGetRequest(path: path) { result in
             switch result {
             case .success(let data):
