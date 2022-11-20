@@ -87,15 +87,11 @@ class MoviesViewModel {
             CoreDataManager.shared.saveMovies(moviesWithRange)
         }
         
-        var vms = [MovieTableViewCellViewModel]()
-        
-        for movie in moviesWithRange {
-            let cellViewModel = MovieTableViewCellViewModel(id: movie.id,
-                                                            title: movie.title,
-                                                            rank: movie.rank,
-                                                            imageUrl: movie.imageUrl)
-            
-            vms.append(cellViewModel)
+        let vms = moviesWithRange.map {
+            MovieTableViewCellViewModel(id: $0.id,
+                                        title: $0.title,
+                                        rank: $0.rank,
+                                        imageUrl: $0.imageUrl)
         }
         
         movieCellViewModels = vms
