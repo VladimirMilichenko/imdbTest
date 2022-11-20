@@ -27,6 +27,9 @@ class CharactersCountTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationController?.delegate = self
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
        
         if let image = viewModel?.image {
             headerImageView.image = image
@@ -76,5 +79,25 @@ class CharactersCountTableViewController: UITableViewController {
         cell.contentConfiguration = content
         
         return cell
+    }
+}
+
+//MARK: - UINavigationControllerDelegate
+
+extension CharactersCountTableViewController: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController,
+                              animationControllerFor operation: UINavigationController.Operation,
+                              from fromVC: UIViewController,
+                              to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return CustomTransitionAnimator()
+    }
+}
+
+//MARK: - UIGestureRecognizerDelegate
+
+extension CharactersCountTableViewController: UIGestureRecognizerDelegate {
+    //To prevent bug on backswipe gesture (this happen, after custom animation added).
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }

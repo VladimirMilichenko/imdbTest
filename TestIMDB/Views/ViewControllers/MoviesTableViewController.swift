@@ -6,7 +6,7 @@
 //
 
 import UIKit
-//TODO: Pull to refresh from online
+
 class MoviesTableViewController: UITableViewController {
     private var activityIndicatorView: UIActivityIndicatorView!
     private var searchController: UISearchController!
@@ -25,6 +25,7 @@ class MoviesTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         activityIndicatorView = UIActivityIndicatorView(frame: view.bounds)
         activityIndicatorView.style = .large
         activityIndicatorView.hidesWhenStopped = true
@@ -114,4 +115,3 @@ extension MoviesTableViewController: UISearchResultsUpdating {
         tableView.reloadData()
     }
 }
-

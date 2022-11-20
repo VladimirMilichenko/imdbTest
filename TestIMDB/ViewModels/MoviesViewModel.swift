@@ -8,6 +8,8 @@
 import Foundation
 
 class MoviesViewModel {
+    private static let defaultMaxCount = 10
+    
     var movieCellViewModels = [MovieTableViewCellViewModel]() {
         didSet {
             viewModelCompletion?(nil)
@@ -23,7 +25,7 @@ class MoviesViewModel {
     
     //MARK: - Lifecycle
     
-    init(moviesService: MoviesServiceProtocol, maxCount: Int = 10) {
+    init(moviesService: MoviesServiceProtocol, maxCount: Int = defaultMaxCount) {
         self.moviesService = moviesService
         self.maxCount = maxCount
     }
