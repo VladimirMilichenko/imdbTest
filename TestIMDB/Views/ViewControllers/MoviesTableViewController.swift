@@ -12,8 +12,8 @@ class MoviesTableViewController: UITableViewController {
     private var searchController: UISearchController!
     
     lazy var viewModel: MoviesViewModel = {
-//        return MoviesViewModel(moviesService: ApiMoviesService())
-        return MoviesViewModel(moviesService: TestDataMoviesService())
+        return MoviesViewModel(moviesService: ApiMoviesService())
+//        return MoviesViewModel(moviesService: TestDataMoviesService())
     }()
     
     var isFiltering: Bool {
@@ -30,9 +30,7 @@ class MoviesTableViewController: UITableViewController {
         activityIndicatorView.style = .large
         activityIndicatorView.hidesWhenStopped = true
         
-//        tableView.backgroundView = activityIndicatorView
-        
-        self.updateMovies()
+        tableView.backgroundView = activityIndicatorView
         
         viewModel.viewModelCompletion = { [weak self] error in
             DispatchQueue.main.async {
@@ -49,6 +47,8 @@ class MoviesTableViewController: UITableViewController {
                 }
             }
         }
+        
+        self.updateMovies()
         
         searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
@@ -72,7 +72,9 @@ class MoviesTableViewController: UITableViewController {
     //MARK: - IBAction
     
     @IBAction func refreshControlAction(_ sender: UIRefreshControl) {
-        self.updateMovies()
+        if !activityIndicatorView.isAnimating {
+            self.updateMovies()
+        }
     }
     
     //MARK: - Private methods
