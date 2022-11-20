@@ -85,7 +85,8 @@ class MoviesTableViewController: UITableViewController {
     }
     
     private func cellViewModel(at indexPath: IndexPath) -> MovieTableViewCellViewModel {
-        return isFiltering ? viewModel.getFilteredMovieCellViewModel(by: searchController.searchBar.text!, indexPath: indexPath)
+        return isFiltering ? viewModel.getFilteredMovieCellViewModel(by: searchController.searchBar.text!,
+                                                                     indexPath: indexPath)
                            : viewModel.getMovieCellViewModel(at: indexPath)
     }
     
@@ -100,7 +101,8 @@ class MoviesTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.identifier, for: indexPath) as? MovieTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.identifier,
+                                                       for: indexPath) as? MovieTableViewCell else {
             fatalError("MovieTableViewCell does not exist")
         }
         

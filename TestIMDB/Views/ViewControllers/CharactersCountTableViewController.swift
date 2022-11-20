@@ -16,7 +16,7 @@ class CharactersCountTableViewController: UITableViewController {
     
     //MARK: - Properties
     
-    let cellReuseIdentifier = "CharactersCountTableViewCell"
+    private let cellReuseIdentifier = "CharactersCountTableViewCell"
     
     var viewModel: CharactersCountViewModel?
     
@@ -85,6 +85,7 @@ class CharactersCountTableViewController: UITableViewController {
 //MARK: - UINavigationControllerDelegate
 
 extension CharactersCountTableViewController: UINavigationControllerDelegate {
+    
     func navigationController(_ navigationController: UINavigationController,
                               animationControllerFor operation: UINavigationController.Operation,
                               from fromVC: UIViewController,
@@ -97,7 +98,8 @@ extension CharactersCountTableViewController: UINavigationControllerDelegate {
 
 extension CharactersCountTableViewController: UIGestureRecognizerDelegate {
     //To prevent bug on backswipe gesture (this happen, after custom animation added).
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
 }
