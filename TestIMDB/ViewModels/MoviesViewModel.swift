@@ -34,15 +34,15 @@ class MoviesViewModel {
     
     //MARK: - Internal methods
     
-    func getMovies(needToCacheCheck: Bool = false) {
-        if needToCacheCheck {
+    func getMovies(forceUpdate: Bool = false) {
+        if forceUpdate {
+            getMoviesFromApi()
+        } else {
             if let movies = CoreDataManager.shared.loadMovies(), movies.count > 0 {
                 self.fetchMovies(movies)
             } else {
                 getMoviesFromApi()
             }
-        } else {
-            getMoviesFromApi()
         }
     }
     

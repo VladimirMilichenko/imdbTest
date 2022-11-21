@@ -34,7 +34,7 @@ class MoviesTableViewController: UITableViewController {
         
         viewModel.delegate = self
         
-        self.updateMovies(useCache: true)
+        self.updateMovies()
         
         searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
@@ -59,15 +59,15 @@ class MoviesTableViewController: UITableViewController {
     
     @IBAction func refreshControlAction(_ sender: UIRefreshControl) {
         if !activityIndicatorView.isAnimating {
-            self.updateMovies()
+            self.updateMovies(forceUpdate: true)
         }
     }
     
     //MARK: - Private methods
     
-    private func updateMovies(useCache: Bool = false) {
+    private func updateMovies(forceUpdate: Bool = false) {
         activityIndicatorView.startAnimating()
-        viewModel.getMovies(needToCacheCheck: useCache)
+        viewModel.getMovies(forceUpdate: forceUpdate)
     }
     
     private func cellViewModel(at indexPath: IndexPath) -> MovieTableViewCellViewModel {
