@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MovieTableViewCellViewModel: ViewModel {
+class MovieTableViewCellViewModel: ImageDownloadableViewModel {
     var id: String
     var rank: String
     

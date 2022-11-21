@@ -65,7 +65,7 @@ class ApiMoviesService {
 
 //MARK: - MoviesServiceProtocol
 
-extension ApiMoviesService: MoviesServiceProtocol {
+extension ApiMoviesService: MoviesService {
     func getMovies(completion: @escaping (Result<[Movie], Error>) -> ()) {
         imdbApiGetRequest(path: path) { result in
             switch result {

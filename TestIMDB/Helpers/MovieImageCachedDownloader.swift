@@ -11,13 +11,13 @@ final class MovieImageCachedDownloader {
     
     //MARK: - Static methods
     
-    static func loadImage(from url: URL, completion: @escaping (UIImage?) -> ()) -> URLSessionTask? {
+    static func loadImage(from url: URL, completion: @escaping (Result<UIImage, Error>) -> ()) -> URLSessionTask? {
         let request = URLRequest(url: url)
         var dataTask: URLSessionTask?
         
         if let data = URLCache.shared.cachedResponse(for: request)?.data,
            let image = UIImage(data: data) {
-            completion(image)
+            completion(.success(image))
         } else {
             dataTask = URLSession.shared.dataTask(with: request) { data, response, error in
                 if let data = data,
@@ -26,9 +26,9 @@ final class MovieImageCachedDownloader {
                     let cachedData = CachedURLResponse(response: httpResponse, data: data)
                     URLCache.shared.storeCachedResponse(cachedData, for: request)
                     
-                    completion(image)
+                    completion(.success(image))
                 } else {
-                    completion(nil)
+                    completion(.failure(ResponseCustomError.imageError))
                 }
             }
             

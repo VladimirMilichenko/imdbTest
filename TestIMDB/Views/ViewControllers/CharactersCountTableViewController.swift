@@ -18,7 +18,7 @@ class CharactersCountTableViewController: UITableViewController {
     
     private let cellReuseIdentifier = "CharactersCountTableViewCell"
     
-    var viewModel: CharactersCountViewModel?
+    var viewModel: ImageDownloadableViewModel?
     
     private var charactersOccurencies: [(String, Int)]?
     private var imageRequest: URLSessionTask?

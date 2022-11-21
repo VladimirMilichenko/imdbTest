@@ -8,7 +8,7 @@
 import XCTest
 
 final class MoviesViewModelTest: XCTestCase {
-    class MockMoviesService: MoviesServiceProtocol {
+    class MockMoviesService: MoviesService {
         func getMovies(completion: @escaping (Result<[Movie], Error>) -> ()) {
             var movies = [Movie]()
             

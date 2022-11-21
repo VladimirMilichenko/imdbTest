@@ -49,9 +49,9 @@ class MoviesTableViewController: UITableViewController {
             let viewModel = cellViewModel(at: tableView.indexPathForSelectedRow!)
             destinationVC.title = viewModel.title
             
-            destinationVC.viewModel = CharactersCountViewModel(title: viewModel.title,
-                                                               imageUrl: viewModel.imageUrl,
-                                                               image: viewModel.image)
+            destinationVC.viewModel = ImageDownloadableViewModel(title: viewModel.title,
+                                                                 imageUrl: viewModel.imageUrl,
+                                                                 image: viewModel.image)
         }
     }
     

@@ -1,16 +1,13 @@
 //
-//  CharactersCountViewModel.swift
+//  ImageDownloadableViewModel+OccurenciesCount.swift
 //  TestIMDB
 //
-//  Created by Vladimir Milichenko on 11/19/22.
+//  Created by Vladimir Milichenko on 11/21/22.
 //
 
-import UIKit
+import Foundation
 
-class CharactersCountViewModel: ViewModel {
-    
-    //MARK: Internal methods
-    
+extension ImageDownloadableViewModel {
     func titleCharactersOccurences() -> [(String, Int)]? {
         if title.count == 0 {
             return nil

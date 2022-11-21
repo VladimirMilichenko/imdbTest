@@ -22,13 +22,12 @@ class MoviesViewModel {
         }
     }
     
-    private var moviesService: MoviesServiceProtocol
-    
+    private(set) var moviesService: MoviesService
     private(set) var maxCount: Int
     
     //MARK: - Lifecycle
     
-    init(moviesService: MoviesServiceProtocol, maxCount: Int = defaultMaxCount) {
+    init(moviesService: MoviesService, maxCount: Int = defaultMaxCount) {
         self.moviesService = moviesService
         self.maxCount = maxCount
     }

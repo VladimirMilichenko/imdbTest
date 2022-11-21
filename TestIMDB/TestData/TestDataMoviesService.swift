@@ -7,7 +7,7 @@
 
 import Foundation
 
-class TestDataMoviesService: MoviesServiceProtocol {
+class TestDataMoviesService: MoviesService {
     func getMovies(completion: @escaping (Result<[Movie], Error>) -> ()) {
         if let bundleURL = Bundle.main.url(forResource: "Movies", withExtension: "json"),
            let data = try? Data(contentsOf: bundleURL) {

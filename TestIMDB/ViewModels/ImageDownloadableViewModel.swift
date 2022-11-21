@@ -1,5 +1,5 @@
 //
-//  BaseViewModel.swift
+//  ImageDownloadableViewModel.swift
 //  TestIMDB
 //
 //  Created by Vladimir Milichenko on 11/19/22.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewModel {
+class ImageDownloadableViewModel {
     var title: String
     var imageUrl: URL
     var image: UIImage?
@@ -19,11 +19,15 @@ class ViewModel {
     }
     
     func loadImage(completion: @escaping (Bool) -> ()) -> URLSessionTask? {
-        return MovieImageCachedDownloader.loadImage(from: self.imageUrl) { image in
-            if let img = image {
-                self.image = img
+        return MovieImageCachedDownloader.loadImage(from: self.imageUrl) { result in
+            switch(result) {
+            case .success(let image):
+                self.image = image
                 completion(true)
-            } else {
+            case .failure(let error):
+#if DEBUG
+                print("Image download error: \(error.localizedDescription)")
+#endif
                 completion(false)
             }
         }
